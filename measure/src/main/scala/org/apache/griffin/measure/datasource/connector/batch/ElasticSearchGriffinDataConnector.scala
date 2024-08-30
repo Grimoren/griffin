@@ -20,6 +20,7 @@ package org.apache.griffin.measure.datasource.connector.batch
 import java.io.{BufferedReader, ByteArrayInputStream, InputStreamReader}
 import java.net.URI
 import java.util.{Iterator => JavaIterator, Map => JavaMap}
+import java.util.stream.Collectors
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -37,6 +38,7 @@ import org.apache.griffin.measure.configuration.dqdefinition.DataConnectorParam
 import org.apache.griffin.measure.context.TimeRange
 import org.apache.griffin.measure.datasource.TimestampStorage
 import org.apache.griffin.measure.utils.ParamUtil._
+
 
 @deprecated(
   s"This class is deprecated. Use '${classOf[ElasticSearchDataConnector].getCanonicalName}'.",
@@ -83,7 +85,8 @@ case class ElasticSearchGriffinDataConnector(
         if (answer._1) {
           import sparkSession.implicits._
           import collection.JavaConverters._
-          val rdd: RDD[String] = sparkSession.sparkContext.parallelize(answer._2.lines.toList.asScala)
+          val seqList = answer._2.lines.collect(Collectors.toList()).asScala
+          val rdd: RDD[String] = sparkSession.sparkContext.parallelize(seqList)
           val reader: DataFrameReader = sparkSession.read
           reader.option("header", value = true).option("inferSchema", value = true)
           val df: DataFrame = reader.csv(rdd.toDS())
