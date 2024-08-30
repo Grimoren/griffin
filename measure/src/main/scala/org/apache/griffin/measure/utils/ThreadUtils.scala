@@ -28,7 +28,7 @@ import com.google.common.util.concurrent.{MoreExecutors, ThreadFactoryBuilder}
 private[griffin] object ThreadUtils {
 
   private val sameThreadExecutionContext =
-    ExecutionContext.fromExecutorService(MoreExecutors.sameThreadExecutor())
+    ExecutionContext.fromExecutorService(MoreExecutors.newDirectExecutorService())
 
   /**
    * An `ExecutionContextExecutor` that runs each task in the thread that invokes `execute/submit`.
