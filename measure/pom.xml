@@ -376,27 +376,6 @@ under the License.
             </plugin>
 
             <plugin>
-                <groupId>org.antipathy</groupId>
-                <artifactId>mvn-scalafmt_${scala.binary.version}</artifactId>
-                <version>${scalafmt.version}</version>
-                <configuration>
-                    <configLocation>${project.parent.basedir}/.scalafmt.conf</configLocation>
-                    <skipTestSources>false</skipTestSources>
-                    <skipSources>false</skipSources>
-                    <respectVersion>false</respectVersion>
-                    <validateOnly>false</validateOnly>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <plugin>
                 <groupId>org.scalastyle</groupId>
                 <artifactId>scalastyle-maven-plugin</artifactId>
                 <version>${scalastyle.version}</version>
